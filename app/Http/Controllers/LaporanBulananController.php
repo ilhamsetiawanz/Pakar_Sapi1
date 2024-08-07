@@ -29,7 +29,7 @@ class LaporanBulananController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**

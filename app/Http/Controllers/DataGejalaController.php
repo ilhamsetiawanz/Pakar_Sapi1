@@ -59,7 +59,7 @@ class DataGejalaController extends Controller
      */
     public function show(DataGejala $dataGejala)
     {
-        //
+        // 
     }
 
     /**
@@ -67,7 +67,8 @@ class DataGejalaController extends Controller
      */
     public function edit(DataGejala $dataGejala)
     {
-        //
+        return response()->view('pages.admin.Gejala.edit');
+        
     }
 
     /**
@@ -75,7 +76,22 @@ class DataGejalaController extends Controller
      */
     public function update(UpdateDataGejalaRequest $request, DataGejala $dataGejala)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'KodeGejala' => 'required',
+            'NamaGejala' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $dataGejala->update([
+            'KodeGejala' => $request->KodeGejala,
+            'NamaGejala' => $request->NamaGejala,
+        ]);
+
+        return redirect('gejala');
+
     }
 
     /**
@@ -83,8 +99,12 @@ class DataGejalaController extends Controller
      */
     public function destroy(DataGejala $dataGejala)
     {
+        // Menghapus aturan yang berelasi
+        $dataGejala->aturan()->delete();
+    
+        // Menghapus DataGejala
         $dataGejala->delete();
         
-        return redirect('gejala');
-    }   
+        return redirect('gejala')->with('success', 'Data gejala dan aturan yang terkait telah dihapus.');
+    }     
 }

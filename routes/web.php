@@ -23,8 +23,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/gejala', [DataGejalaController::class, 'index'])->name('Gejala');
     Route::get('/tambah-gejala', [DataGejalaController::class, 'create'])->name('Tambah-Gejala');
     Route::post('/simpan-gejala', [DataGejalaController::class, 'store'])->name('Simpan-Gejala');
-    // Route::get('/testing', [DataGejalaController::class, 'PDFExport'])->name('testing');
-
+    Route::get('/edit-gejala/{dataGejala}', [DataGejalaController::class, 'edit'])->name('Edit-Gejala');
+    Route::put('/update-gejala/{dataGejala}', [DataGejalaController::class, 'update'])->name('Save-Gejala');
+    Route::delete('/delete-gejala/{dataGejala}', [DataGejalaController::class, 'destroy'])->name('Hapus-Gejala');
     // Penyakit
 
     // Aturan
