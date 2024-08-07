@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Laporan_Bulanan;
 use App\Http\Requests\StoreLaporan_BulananRequest;
 use App\Http\Requests\UpdateLaporan_BulananRequest;
+use App\Models\Penyakit;
 
 class LaporanBulananController extends Controller
 {
@@ -13,7 +14,14 @@ class LaporanBulananController extends Controller
      */
     public function index()
     {
-        //
+        $laporan = Laporan_Bulanan::paginate(20);
+        $penyakit = Penyakit::all();
+
+
+        return view('pages.admin.Report.index', [
+            'laporan' => $laporan,
+            'penyakit' => $penyakit,
+        ]);
     }
 
     /**

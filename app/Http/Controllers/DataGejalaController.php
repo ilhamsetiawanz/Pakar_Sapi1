@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DataGejala;
+
 use App\Http\Requests\StoreDataGejalaRequest;
 use App\Http\Requests\UpdateDataGejalaRequest;
 use Illuminate\Support\Facades\Validator;
@@ -85,5 +86,5 @@ class DataGejalaController extends Controller
         $dataGejala->delete();
         
         return redirect('gejala');
-    }
+    }   
 }

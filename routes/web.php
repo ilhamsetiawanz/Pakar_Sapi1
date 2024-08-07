@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/gejala', [DataGejalaController::class, 'index'])->name('Gejala');
     Route::get('/tambah-gejala', [DataGejalaController::class, 'create'])->name('Tambah-Gejala');
     Route::post('/simpan-gejala', [DataGejalaController::class, 'store'])->name('Simpan-Gejala');
+    // Route::get('/testing', [DataGejalaController::class, 'PDFExport'])->name('testing');
 
     // Penyakit
 
