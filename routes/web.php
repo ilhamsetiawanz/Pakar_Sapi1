@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DataGejalaController;
 use App\Http\Controllers\DiagnosisController;
+use App\Http\Controllers\LaporanBulananController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,7 @@ Route::middleware('auth')->group(function(){
     // Solusi
 
     // Laporan Bulanan
+    Route::get('/Laporan-Bulanan', [LaporanBulananController::class, 'index'])->name('Laporan-Bulanan');
 
     // Diagnosis
     Route::get('/diagnosis', [DiagnosisController::class, 'index',])->name('Diagnosis');

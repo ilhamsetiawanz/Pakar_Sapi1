@@ -14,7 +14,7 @@ class LaporanBulananController extends Controller
      */
     public function index()
     {
-        $laporan = Laporan_Bulanan::paginate(20);
+        $laporan = Laporan_Bulanan::orderBy('Tanggal_Diagnosa', 'desc')->paginate(20);
         $penyakit = Penyakit::all();
 
 
