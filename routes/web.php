@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataGejalaController;
 use App\Http\Controllers\DiagnosisController;
 use App\Http\Controllers\LaporanBulananController;
@@ -16,9 +17,7 @@ Route::middleware('guest')->group(function(){
 });
 
 Route::middleware('auth')->group(function(){
-    Route::get('/dashboard', function(){
-        return view('pages.admin.home');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('Home');
 
     // Gejala
     Route::get('/gejala', [DataGejalaController::class, 'index'])->name('Gejala');
