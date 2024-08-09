@@ -15,7 +15,8 @@ class PenyakitController extends Controller
      */
     public function index()
     {
-        //
+        $penyakit = Penyakit::all();
+        return view('penyakit.index', compact('penyakit'));
     }
 
     /**
