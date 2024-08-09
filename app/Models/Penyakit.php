@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,8 +18,23 @@ class Penyakit extends Model
      */
     protected $fillable = [
         'Penyakit',
-        'KodePenyakit'
+        'KodePenyakit',
+        'image',
+        'deskripsi'
     ];
+
+    
+    /**
+     * image
+     *
+     * @return Attribute
+     */
+    protected function image(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($image) => url('/storage/asset/' . $image),
+        );
+    }
 
     public function Aturan()
     {

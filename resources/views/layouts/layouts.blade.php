@@ -28,10 +28,10 @@
 
     <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
         <div class="p-6">
-            <a href="{{ route('dashboard') }}" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+            <a href="{{ route('Home') }}" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
         </div>
         <nav class="text-white text-base font-semibold pt-3">
-            <a href="{{ route('dashboard') }}" class="flex items-center {{ Request::is('dashboard') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
+            <a href="{{ route('Home') }}" class="flex items-center {{ Request::is('Home') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
                 <span class="material-icons mr-3">dashboard</span>
                 Dashboard
             </a>
@@ -79,7 +79,7 @@
 
             <!-- Dropdown Nav -->
             <nav :class="isOpen ? 'flex': 'hidden'" class="flex flex-col pt-4">
-                <a href="{{ route('dashboard') }}" class="flex items-center {{ Request::is('dashboard') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
+                <a href="{{ route('Home') }}" class="flex items-center {{ Request::is('Home') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
                     <span class="material-icons mr-3">dashboard</span>
                     Dashboard
                 </a>

@@ -10,37 +10,42 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        // Dapatkan semua tahun yang ada dalam data laporan
-        $tahunList = Laporan_Bulanan::selectRaw('YEAR(Tanggal_Diagnosa) as year')
-                                    ->distinct()
-                                    ->pluck('year');
-
-        // Ambil tahun dari permintaan atau gunakan tahun saat ini sebagai default
+        // Dapatkan tahun dari request atau gunakan tahun saat ini sebagai default
         $tahun = $request->input('tahun', Carbon::now()->year);
 
-        // Dapatkan data laporan berdasarkan tahun
-        $laporan = Laporan_Bulanan::whereYear('Tanggal_Diagnosa', $tahun)
-                                  ->get();
+        // Dapatkan daftar tahun yang tersedia
+        $tahunList = Laporan_Bulanan::selectRaw('YEAR(Tanggal_Diagnosa) as tahun')
+            ->distinct()
+            ->orderBy('tahun', 'desc')
+            ->pluck('tahun');
 
-        // Data untuk grafik
-        $data = $laporan->groupBy(function($item) {
-            return Carbon::parse($item->Tanggal_Diagnosa)->month;
-        })->map(function($item) {
-            return $item->count();
-        });
+        // Dapatkan data bulanan untuk tahun yang dipilih
+        $laporanBulanan = Laporan_Bulanan::selectRaw('MONTH(Tanggal_Diagnosa) as bulan, COUNT(*) as jumlah')
+            ->whereYear('Tanggal_Diagnosa', $tahun)
+            ->groupBy('bulan')
+            ->orderBy('bulan')
+            ->get();
 
-        // Isi data untuk semua bulan
-        $labels = range(1, 12);
-        $values = [];
-        foreach ($labels as $bulan) {
-            $values[] = $data->get($bulan, 0); // jika bulan tidak ada, gunakan nilai default 0
-        }
+        // Dapatkan data tahunan
+        $laporanTahunan = Laporan_Bulanan::selectRaw('YEAR(Tanggal_Diagnosa) as tahun, COUNT(*) as jumlah')
+            ->groupBy('tahun')
+            ->orderBy('tahun')
+            ->get();
 
-        return view('pages.admin.home', [
-            'labels' => $labels,
-            'values' => $values,
+        // Persiapkan data untuk grafik
+        $labelsBulanan = $laporanBulanan->pluck('bulan')->all();
+        $valuesBulanan = $laporanBulanan->pluck('jumlah')->all();
+        
+        $labelsTahunan = $laporanTahunan->pluck('tahun')->all();
+        $valuesTahunan = $laporanTahunan->pluck('jumlah')->all();
+
+        return view('pages.admin.Home', [
             'tahun' => $tahun,
             'tahunList' => $tahunList,
+            'labelsBulanan' => $labelsBulanan,
+            'valuesBulanan' => $valuesBulanan,
+            'labelsTahunan' => $labelsTahunan,
+            'valuesTahunan' => $valuesTahunan,
         ]);
     }
 }

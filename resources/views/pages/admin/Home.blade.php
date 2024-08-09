@@ -5,8 +5,10 @@
 @section('pageName', 'Dashboard')
 @section('content')
     <div>
-        <div class="w-full mt-12">
+        <div class= "w-full m-3">
             @include('components.grafik')
+        </div>
+        <div class="w-full mt-11">
             <p class="text-xl pb-3 flex items-center">
                 <i class="fas fa-list mr-3"></i> Table Example
             </p>

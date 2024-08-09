@@ -12,7 +12,7 @@
                 <h2 class="text-xl font-bold text-gray-700">Hasil Diagnosis</h2>
                 <div class="mt-6">
                     <p class="text-gray-600"><strong>Penyakit Terdiagnosis:</strong> {{ $penyakit->Penyakit }}</p>
-                    <p class="text-gray-600"><strong>Kode Penyakit:</strong> {{ $penyakit->KodePenyakit }}</p>
+                    <p class="text-gray-600"><strong>Deskripsi Penyakit:</strong> {{ $penyakit->deskripsi }}</p>
                 </div>
 
                 @if ($penyakit->Solusi)

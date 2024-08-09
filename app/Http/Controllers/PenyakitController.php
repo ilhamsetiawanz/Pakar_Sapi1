@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Penyakit;
 use App\Http\Requests\StorePenyakitRequest;
 use App\Http\Requests\UpdatePenyakitRequest;
+use App\Models\Solusi;
+use Illuminate\Support\Facades\Validator;
 
 class PenyakitController extends Controller
 {
@@ -29,7 +31,39 @@ class PenyakitController extends Controller
      */
     public function store(StorePenyakitRequest $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'Penyakit' => 'required',
+            'KodePenyakit' => 'required',
+            'deskripsi' => 'required',
+            'image'       => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'solusi' => 'required|string',
+            'Pencegahan' => 'required|string',
+        ]);
+        // Check if validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+    
+        // Upload image
+        $image = $request->file('image');
+        $image->storeAs('public/asset', $image->hashName());
+
+        $penyakit = Penyakit::create([
+            'Penyakit' => $request->Penyakit,
+            'KodePenyakit' => $request->KodePenyakit,
+            'image' => $image->hashName(),
+            'deskripsi' => $request->deskripsi,
+        ]);
+    
+        // Simpan solusi terkait penyakit
+        $solusi = new Solusi([
+            'solusi' => $request->solusi,
+            'Pencegahan' => $request->Pencegahan,
+        ]);
+    
+        $penyakit->Solusi()->save($solusi);
+
+        return redirect('penyakit');
     }
 
     /**
