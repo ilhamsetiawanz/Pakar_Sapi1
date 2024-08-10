@@ -16,7 +16,7 @@ class PenyakitController extends Controller
     public function index()
     {
         $penyakit = Penyakit::all();
-        return view('penyakit.index', compact('penyakit'));
+        return view('pages.admin.Penyakit.index', compact('penyakit'));
     }
 
     /**
@@ -24,7 +24,7 @@ class PenyakitController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.admin.Penyakit.add');
     }
 
     /**

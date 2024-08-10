@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataGejalaController;
 use App\Http\Controllers\DiagnosisController;
 use App\Http\Controllers\LaporanBulananController;
+use App\Http\Controllers\PenyakitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,10 +28,11 @@ Route::middleware('auth')->group(function(){
     Route::put('/update-gejala/{dataGejala}', [DataGejalaController::class, 'update'])->name('Save-Gejala');
     Route::delete('/delete-gejala/{dataGejala}', [DataGejalaController::class, 'destroy'])->name('Hapus-Gejala');
     // Penyakit
-
+    Route::get('/penyakit', [PenyakitController::class, 'index'])->name('Penyakit');
+    Route::get('/tambah-penyakit', [PenyakitController::class, 'create'])->name('Tambah-Penyakit');
+    Route::post('/simpan-penyakit', [PenyakitController::class, 'store'])->name('Simpan-Penyakit');
     // Aturan
 
-    // Solusi
 
     // Laporan Bulanan
     Route::get('/Laporan-Bulanan', [LaporanBulananController::class, 'index'])->name('Laporan-Bulanan');
