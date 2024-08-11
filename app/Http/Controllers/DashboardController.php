@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Laporan_Bulanan;
+use App\Models\Penyakit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,8 @@ class DashboardController extends Controller
         $labelsTahunan = $laporanTahunan->pluck('tahun')->all();
         $valuesTahunan = $laporanTahunan->pluck('jumlah')->all();
 
+        $penyakit = Penyakit::all();
+
         return view('pages.admin.Home', [
             'tahun' => $tahun,
             'tahunList' => $tahunList,
@@ -46,6 +49,7 @@ class DashboardController extends Controller
             'valuesBulanan' => $valuesBulanan,
             'labelsTahunan' => $labelsTahunan,
             'valuesTahunan' => $valuesTahunan,
+            'penyakit' => $penyakit
         ]);
     }
 }

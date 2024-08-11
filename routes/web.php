@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function(){
     Route::get('/penyakit', [PenyakitController::class, 'index'])->name('Penyakit');
     Route::get('/tambah-penyakit', [PenyakitController::class, 'create'])->name('Tambah-Penyakit');
     Route::post('/simpan-penyakit', [PenyakitController::class, 'store'])->name('Simpan-Penyakit');
+    Route::get('/edit-penyakit/{penyakit}', [PenyakitController::class, 'edit'])->name('Edit-Penyakit');
+    Route::put('/update-penyakit/{penyakit}', [PenyakitController::class, 'update'])->name('Save-Penyakit');
     // Aturan
 
 

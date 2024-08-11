@@ -22,27 +22,38 @@ class DiagnosisController extends Controller
     // Form Diagnosis
     public function processDiagnosis(Request $request)
     {
+        // Mendapatkan input dari form
         $selectGejala = $request->input('gejala');
         $namaPeternak = $request->input('nama_peternak');
         $tanggalDiagnosis = $request->input('tanggal_diagnosa');
-
+    
+        // Menggunakan metode forward chaining untuk mendapatkan ID penyakit
         $penyakitId = $this->forwardChaining($selectGejala);
-
-        if($penyakitId){
+    
+        if ($penyakitId) {
+            // Menyimpan data ke dalam tabel laporan bulanan
             Laporan_Bulanan::create([
                 'nama_peternak' => $namaPeternak,
                 'kdPenyakit' => $penyakitId,
                 'Tanggal_Diagnosa' => $tanggalDiagnosis
             ]);
-
-                
+    
+            // Mendapatkan data penyakit dan solusinya
             $penyakit = Penyakit::with('Solusi')->find($penyakitId);
-
-            return view('pages.admin.Diagnosis.result', ['penyakit' => $penyakit]);
-        } else{
+    
+            // Memastikan penyakit ditemukan dan memiliki solusi
+            if ($penyakit) {
+                return view('pages.admin.Diagnosis.result', ['penyakit' => $penyakit]);
+            } else {
+                // Kasus penyakit tidak ditemukan, meskipun ID ada
+                return view('pages.admin.Diagnosis.result', ['penyakit' => null]);
+            }
+        } else {
+            // Kasus tidak ada penyakit yang terdiagnosis
             return view('pages.admin.Diagnosis.result', ['penyakit' => null]);
         }
     }
+    
 
     // Algoritma Forward Chaining
     private function forwardChaining($selectGejala)

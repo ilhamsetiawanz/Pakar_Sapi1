@@ -45,7 +45,7 @@ class Penyakit extends Model
     {
         return $this->hasOne(Solusi::class, 'kd_penyakit', 'id');
     }
-
+    
     public function Laporan()
     {
         return $this->hasMany(Laporan_Bulanan::class, 'kdPenyakit', 'id');

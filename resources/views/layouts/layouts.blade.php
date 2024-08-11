@@ -35,11 +35,15 @@
                 <span class="material-icons mr-3">dashboard</span>
                 Dashboard
             </a>
-            <a href="{{ route('Gejala') }}" class="flex items-center {{ Request::is('gejala') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
+            <a href="{{ route('Gejala') }}" class="flex items-center {{ Request::is('Gejala') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
                 <span class="material-icons mr-3">note</span>
                 Data Gejala
             </a>
-            <a href="{{ route('Diagnosis') }}" class="flex items-center {{ Request::is('diagnosis') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
+            <a href="{{ route('Penyakit') }}" class="flex items-center {{ Request::is('Penyakit') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
+                <span class="material-icons mr-3">note</span>
+                Data Penyakit
+            </a>
+            <a href="{{ route('Diagnosis') }}" class="flex items-center {{ Request::is('Diagnosis') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
                 <span class="material-icons mr-3">healing</span>
                 Diagnosa
             </a>
@@ -83,11 +87,15 @@
                     <span class="material-icons mr-3">dashboard</span>
                     Dashboard
                 </a>
-                <a href="{{ route('Gejala') }}" class="flex items-center {{ Request::is('gejala') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
+                <a href="{{ route('Gejala') }}" class="flex items-center {{ Request::is('Gejala') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
                     <span class="material-icons mr-3">note</span>
                     Data Gejala
                 </a>
-                <a href="{{ route('Diagnosis') }}" class="flex items-center {{ Request::is('diagnosis') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
+                <a href="{{ route('Penyakit') }}" class="flex items-center {{ Request::is('Penyakit') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
+                    <span class="material-icons mr-3">note</span>
+                    Data Penyakit
+                </a>
+                <a href="{{ route('Diagnosis') }}" class="flex items-center {{ Request::is('Diagnosis') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
                     <span class="material-icons mr-3">healing</span>
                     Diagnosa
                 </a>
@@ -107,9 +115,6 @@
                     <span class="material-icons mr-3">logout</span>
                     Sign Out
                 </a>
-                <button class="w-full bg-white cta-btn font-semibold py-2 mt-3 rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                    <span class="material-icons mr-3">upgrade</span> Upgrade to Pro!
-                </button>
             </nav>
         </header>
     

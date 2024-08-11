@@ -7,6 +7,8 @@ use App\Http\Requests\StorePenyakitRequest;
 use App\Http\Requests\UpdatePenyakitRequest;
 use App\Models\Solusi;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+
 
 class PenyakitController extends Controller
 {
@@ -80,7 +82,8 @@ class PenyakitController extends Controller
      */
     public function edit(Penyakit $penyakit)
     {
-        //
+        return view('pages.admin.Penyakit.edit', compact('penyakit'));
+
     }
 
     /**
@@ -88,8 +91,52 @@ class PenyakitController extends Controller
      */
     public function update(UpdatePenyakitRequest $request, Penyakit $penyakit)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'Penyakit' => 'required',
+            'KodePenyakit' => 'required',
+            'deskripsi' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            'solusi' => 'required|string',
+            'Pencegahan' => 'required|string',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+    
+        // Check if a new image is uploaded
+        if ($request->hasFile('image')) {
+            // Delete old image if it exists
+            if ($penyakit->image) {
+                Storage::delete('public/asset/' . $penyakit->image);
+            }
+    
+            // Upload new image
+            $image = $request->file('image');
+            $image->storeAs('public/asset', $image->hashName());
+            $imageName = $image->hashName();
+        } else {
+            // Keep the existing image if no new image is uploaded
+            $imageName = $penyakit->image;
+        }
+    
+        // Update penyakit details
+        $penyakit->update([
+            'Penyakit' => $request->Penyakit,
+            'KodePenyakit' => $request->KodePenyakit,
+            'deskripsi' => $request->deskripsi,
+            'image' => $imageName,
+        ]);
+    
+        // Update solusi details
+        $penyakit->Solusi()->update([
+            'solusi' => $request->solusi,
+            'Pencegahan' => $request->Pencegahan,
+        ]);
+    
+        return redirect('penyakit');
     }
+    
 
     /**
      * Remove the specified resource from storage.
