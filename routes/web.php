@@ -33,8 +33,6 @@ Route::middleware('auth')->group(function(){
     Route::post('/simpan-penyakit', [PenyakitController::class, 'store'])->name('Simpan-Penyakit');
     Route::get('/edit-penyakit/{penyakit}', [PenyakitController::class, 'edit'])->name('Edit-Penyakit');
     Route::put('/update-penyakit/{penyakit}', [PenyakitController::class, 'update'])->name('Save-Penyakit');
-    // Aturan
-
 
     // Laporan Bulanan
     Route::get('/Laporan-Bulanan', [LaporanBulananController::class, 'index'])->name('Laporan-Bulanan');

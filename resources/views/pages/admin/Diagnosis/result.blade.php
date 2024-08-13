@@ -27,6 +27,7 @@
                         <p class="text-gray-600">Belum Ada Solusi untuk penyakit ini.</p>
                     </div>
                 @endif
+                <p><i>Hasil Ini Hanya Diagnosa Sementara Diperlukannya Diagnosa Lebih Lanjut Agar Mendapatkan Hasil Yang Sesuai</i></p>
             @else
                 <h2 class="text-xl font-bold text-gray-700">Tidak Ditemukan Penyakit</h2>
                 <p class="mt-6 text-gray-600">Tidak ada penyakit yang dapat diidentifikasi berdasarkan gejala yang dipilih. Silakan coba lagi dengan memilih gejala lain.</p>

@@ -2,7 +2,7 @@
 
 @section('title', 'Sistem Pakar')
 
-@section('pageName', 'Lakukan Diagnosis')
+@section('pageName', 'Lakukan Diagnosa')
 
 @section('content')
 <div>
