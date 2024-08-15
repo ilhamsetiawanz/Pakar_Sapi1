@@ -117,9 +117,6 @@ class DatabaseSeeder extends Seeder
             ['id_penyakit' => 15, 'id_gejala' => 1],
             ['id_penyakit' => 15, 'id_gejala' => 37],
 
-
-
-
         ]);
     }
 }
