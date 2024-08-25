@@ -47,12 +47,14 @@
                                         <span class="xl:block hidden text-xs">Edit</span>
                                     </button>
                                 </a>
-                                <a href="">
+                                <form method="POST" action="{{ route('Hapus-Penyakit', $item->id)}}">
+                                    @csrf
+                                    @method('DELETE')
                                     <button class=" flex items-center gap-1 rounded-lg bg-red-500 py-2 px-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-red-500/20 transition-all hover:shadow-lg hover:shadow-red-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" data-ripple-light="true">
                                         <span class="material-icons text-xs">delete</span>
                                         <span class="xl:block hidden text-xs">Hapus</span>
                                     </button>
-                                </a>
+                                </form>
                             </td>
                         </tr>
                         @endforeach

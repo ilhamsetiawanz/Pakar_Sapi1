@@ -104,7 +104,7 @@ class PenyakitController extends Controller
             return response()->json($validator->errors(), 422);
         }
     
-        // Check if a new image is uploaded
+        // Handle image upload
         if ($request->hasFile('image')) {
             // Delete old image if it exists
             if ($penyakit->image) {
@@ -128,14 +128,18 @@ class PenyakitController extends Controller
             'image' => $imageName,
         ]);
     
-        // Update solusi details
-        $penyakit->Solusi()->update([
-            'solusi' => $request->solusi,
-            'Pencegahan' => $request->Pencegahan,
-        ]);
+        // Check if the penyakit has a solution or create a new one if not
+        $penyakit->Solusi()->updateOrCreate(
+            ['kd_penyakit' => $penyakit->id], // Condition to check for existing record
+            [
+                'solusi' => $request->solusi,
+                'Pencegahan' => $request->Pencegahan,
+            ]
+        );
     
         return redirect('penyakit');
     }
+    
     
 
     /**
@@ -143,6 +147,8 @@ class PenyakitController extends Controller
      */
     public function destroy(Penyakit $penyakit)
     {
-        //
+        $penyakit->delete();
+
+        return redirect()->route('Penyakit');
     }
 }

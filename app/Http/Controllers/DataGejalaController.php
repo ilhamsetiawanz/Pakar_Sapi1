@@ -67,7 +67,7 @@ class DataGejalaController extends Controller
      */
     public function edit(DataGejala $dataGejala)
     {
-        return response()->view('pages.admin.Gejala.edit');
+        return response()->view('pages.admin.Gejala.edit', compact('dataGejala'));
         
     }
 
