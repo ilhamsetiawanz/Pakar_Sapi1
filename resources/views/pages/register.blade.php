@@ -39,7 +39,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('register') }}">
+                <form method="POST" action="{{ route('postRegister') }}">
                     @csrf
 
                     <div class="py-8">
