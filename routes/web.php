@@ -15,26 +15,30 @@ Route::middleware('guest')->group(function(){
     })->name('login');
     
     Route::post('/login', [UserController::class, 'login'])->name('postLogin');
+    Route::get('/register', function () {
+        return view('pages.register');
+    })->name('register');
+    Route::post('/register', [UserController::class, 'register'])->name('postRegister');
 });
 
 Route::middleware('auth')->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('Home');
-
-    // Gejala
-    Route::get('/gejala', [DataGejalaController::class, 'index'])->name('Gejala');
-    Route::get('/tambah-gejala', [DataGejalaController::class, 'create'])->name('Tambah-Gejala');
-    Route::post('/simpan-gejala', [DataGejalaController::class, 'store'])->name('Simpan-Gejala');
-    Route::get('/edit-gejala/{dataGejala}', [DataGejalaController::class, 'edit'])->name('Edit-Gejala');
-    Route::put('/update-gejala/{dataGejala}', [DataGejalaController::class, 'update'])->name('Save-Gejala');
-    Route::delete('/delete-gejala/{dataGejala}', [DataGejalaController::class, 'destroy'])->name('Hapus-Gejala');
-    // Penyakit
-    Route::get('/penyakit', [PenyakitController::class, 'index'])->name('Penyakit');
-    Route::get('/tambah-penyakit', [PenyakitController::class, 'create'])->name('Tambah-Penyakit');
-    Route::post('/simpan-penyakit', [PenyakitController::class, 'store'])->name('Simpan-Penyakit');
-    Route::get('/edit-penyakit/{penyakit}', [PenyakitController::class, 'edit'])->name('Edit-Penyakit');
-    Route::put('/update-penyakit/{penyakit}', [PenyakitController::class, 'update'])->name('Save-Penyakit');
-    Route::delete('/delete-penyakit/{penyakit}', [PenyakitController::class, 'destroy'])->name('Hapus-Penyakit');
-
+    Route::middleware('role:admin')->group(function(){
+            // Gejala
+            Route::get('/gejala', [DataGejalaController::class, 'index'])->name('Gejala');
+            Route::get('/tambah-gejala', [DataGejalaController::class, 'create'])->name('Tambah-Gejala');
+            Route::post('/simpan-gejala', [DataGejalaController::class, 'store'])->name('Simpan-Gejala');
+            Route::get('/edit-gejala/{dataGejala}', [DataGejalaController::class, 'edit'])->name('Edit-Gejala');
+            Route::put('/update-gejala/{dataGejala}', [DataGejalaController::class, 'update'])->name('Save-Gejala');
+            Route::delete('/delete-gejala/{dataGejala}', [DataGejalaController::class, 'destroy'])->name('Hapus-Gejala');
+            // Penyakit
+            Route::get('/penyakit', [PenyakitController::class, 'index'])->name('Penyakit');
+            Route::get('/tambah-penyakit', [PenyakitController::class, 'create'])->name('Tambah-Penyakit');
+            Route::post('/simpan-penyakit', [PenyakitController::class, 'store'])->name('Simpan-Penyakit');
+            Route::get('/edit-penyakit/{penyakit}', [PenyakitController::class, 'edit'])->name('Edit-Penyakit');
+            Route::put('/update-penyakit/{penyakit}', [PenyakitController::class, 'update'])->name('Save-Penyakit');
+            Route::delete('/delete-penyakit/{penyakit}', [PenyakitController::class, 'destroy'])->name('Hapus-Penyakit');
+    });
     // Laporan Bulanan
     Route::get('/Laporan-Bulanan', [LaporanBulananController::class, 'index'])->name('Laporan-Bulanan');
 

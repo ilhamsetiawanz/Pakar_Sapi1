@@ -31,28 +31,42 @@
             <a href="{{ route('Home') }}" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
         </div>
         <nav class="text-white text-base font-semibold pt-3">
-            <a href="{{ route('Home') }}" class="flex items-center {{ Request::is('Home') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
-                <span class="material-icons mr-3">dashboard</span>
-                Dashboard
-            </a>
-            <a href="{{ route('Gejala') }}" class="flex items-center {{ Request::is('Gejala') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
-                <span class="material-icons mr-3">note</span>
-                Data Gejala
-            </a>
-            <a href="{{ route('Penyakit') }}" class="flex items-center {{ Request::is('Penyakit') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
-                <span class="material-icons mr-3">note</span>
-                Data Penyakit
-            </a>
-            <a href="{{ route('Diagnosis') }}" class="flex items-center {{ Request::is('Diagnosis') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
-                <span class="material-icons mr-3">healing</span>
-                Diagnosa
-            </a>
-            <a href="{{ route('Laporan-Bulanan') }}" class="flex items-center {{ Request::is('Laporan-Bulanan') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
-                <span class="material-icons mr-3">insert_chart</span>
-                Laporan Bulanan
-            </a>
+            @if (Auth::user()->role == 'admin')
+                {{-- <p>Anda login sebagai Admin</p> --}}
+                <a href="{{ route('Home') }}" class="flex items-center {{ Request::is('Home') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
+                    <span class="material-icons mr-3">dashboard</span>
+                    Dashboard
+                </a>
+                <a href="{{ route('Gejala') }}" class="flex items-center {{ Request::is('Gejala') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
+                    <span class="material-icons mr-3">note</span>
+                    Data Gejala
+                </a>
+                <a href="{{ route('Penyakit') }}" class="flex items-center {{ Request::is('Penyakit') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
+                    <span class="material-icons mr-3">note</span>
+                    Data Penyakit
+                </a>
+                <a href="{{ route('Diagnosis') }}" class="flex items-center {{ Request::is('Diagnosis') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
+                    <span class="material-icons mr-3">healing</span>
+                    Diagnosa
+                </a>
+                <a href="{{ route('Laporan-Bulanan') }}" class="flex items-center {{ Request::is('Laporan-Bulanan') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
+                    <span class="material-icons mr-3">insert_chart</span>
+                    Laporan Bulanan
+                </a>
+            @else
+                {{-- <p>Anda bukan Admin</p> --}}
+                <a href="{{ route('Diagnosis') }}" class="flex items-center {{ Request::is('Diagnosis') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
+                    <span class="material-icons mr-3">healing</span>
+                    Diagnosa
+                </a>
+                <a href="{{ route('Laporan-Bulanan') }}" class="flex items-center {{ Request::is('Laporan-Bulanan') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-4 pl-6 nav-item">
+                    <span class="material-icons mr-3">insert_chart</span>
+                    Laporan Bulanan
+                </a>
+            @endif
         </nav>
     </aside>
+    
 
     <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
         <!-- Desktop Header -->
@@ -83,40 +97,42 @@
 
             <!-- Dropdown Nav -->
             <nav :class="isOpen ? 'flex': 'hidden'" class="flex flex-col pt-4">
-                <a href="{{ route('Home') }}" class="flex items-center {{ Request::is('Home') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
-                    <span class="material-icons mr-3">dashboard</span>
-                    Dashboard
-                </a>
-                <a href="{{ route('Gejala') }}" class="flex items-center {{ Request::is('Gejala') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
-                    <span class="material-icons mr-3">note</span>
-                    Data Gejala
-                </a>
-                <a href="{{ route('Penyakit') }}" class="flex items-center {{ Request::is('Penyakit') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
-                    <span class="material-icons mr-3">note</span>
-                    Data Penyakit
-                </a>
-                <a href="{{ route('Diagnosis') }}" class="flex items-center {{ Request::is('Diagnosis') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
-                    <span class="material-icons mr-3">healing</span>
-                    Diagnosa
-                </a>
-                <a href="{{ route('Laporan-Bulanan') }}" class="flex items-center {{ Request::is('Laporan-Bulanan') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
-                    <span class="material-icons mr-3">insert_chart</span>
-                    Laporan Bulanan
-                </a>
-                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <span class="material-icons mr-3">settings</span>
-                    Support
-                </a>
-                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <span class="material-icons mr-3">person</span>
-                    My Account
-                </a>
-                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <span class="material-icons mr-3">logout</span>
-                    Sign Out
-                </a>
+                @if (Auth::user()->role == 'admin')
+                    {{-- <p>Anda login sebagai Admin</p> --}}
+                    <a href="{{ route('Home') }}" class="flex items-center {{ Request::is('Home') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
+                        <span class="material-icons mr-3">dashboard</span>
+                        Dashboard
+                    </a>
+                    <a href="{{ route('Gejala') }}" class="flex items-center {{ Request::is('Gejala') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
+                        <span class="material-icons mr-3">note</span>
+                        Data Gejala
+                    </a>
+                    <a href="{{ route('Penyakit') }}" class="flex items-center {{ Request::is('Penyakit') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
+                        <span class="material-icons mr-3">note</span>
+                        Data Penyakit
+                    </a>
+                    <a href="{{ route('Diagnosis') }}" class="flex items-center {{ Request::is('Diagnosis') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
+                        <span class="material-icons mr-3">healing</span>
+                        Diagnosa
+                    </a>
+                    <a href="{{ route('Laporan-Bulanan') }}" class="flex items-center {{ Request::is('Laporan-Bulanan') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
+                        <span class="material-icons mr-3">insert_chart</span>
+                        Laporan Bulanan
+                    </a>
+                @else
+                    {{-- <p>Anda bukan Admin</p> --}}
+                    <a href="{{ route('Diagnosis') }}" class="flex items-center {{ Request::is('Diagnosis') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
+                        <span class="material-icons mr-3">healing</span>
+                        Diagnosa
+                    </a>
+                    <a href="{{ route('Laporan-Bulanan') }}" class="flex items-center {{ Request::is('Laporan-Bulanan') ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }} py-2 pl-4 nav-item">
+                        <span class="material-icons mr-3">insert_chart</span>
+                        Laporan Bulanan
+                    </a>
+                @endif
             </nav>
         </header>
+
     
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
             <main class="w-full flex-grow p-6">

@@ -42,14 +42,14 @@ class DiagnosisController extends Controller
             $penyakit = Penyakit::with('Solusi')->find($penyakitId);
     
             // Memastikan penyakit ditemukan dan memiliki solusi
-            if ($penyakit) {
+            if ($penyakit) { // Jika Penyakit ditemukan akan memunculkan halaman hasil beserta data penyakit
                 return view('pages.admin.Diagnosis.result', ['penyakit' => $penyakit]);
             } else {
-                // Kasus penyakit tidak ditemukan, meskipun ID ada
+                // jika Kasus penyakit tidak ditemukan, meskipun ID ada akan menampilkan penyakit tidak ditemukan
                 return view('pages.admin.Diagnosis.result', ['penyakit' => null]);
             }
         } else {
-            // Kasus tidak ada penyakit yang terdiagnosis
+            // jika Kasus tidak ada penyakit yang terdiagnosis
             return view('pages.admin.Diagnosis.result', ['penyakit' => null]);
         }
     }
@@ -58,19 +58,60 @@ class DiagnosisController extends Controller
     // Algoritma Forward Chaining
     private function forwardChaining($selectGejala)
     {
+        // Mendapatkan data aturan berdasarkan gejala yang dipilih
         $dataRules = Aturan::whereIn('id_gejala', $selectGejala)->get();
+    
+        // Menghitung kemunculan setiap penyakit berdasarkan aturan
         $countsPenyakit = [];
-
-        foreach($dataRules as $rule){
-            if(isset($countsPenyakit[$rule->id_penyakit])) {
+    
+        foreach ($dataRules as $rule) {
+            if (isset($countsPenyakit[$rule->id_penyakit])) {
                 $countsPenyakit[$rule->id_penyakit]++;
-            }else{
+            } else {
                 $countsPenyakit[$rule->id_penyakit] = 1;
             }
         }
-        arsort($countsPenyakit);
-
-        return key($countsPenyakit);
+    
+        // Memastikan ada setidaknya satu penyakit yang terdeteksi
+        if (empty($countsPenyakit)) {
+            return null; // Tidak ada penyakit yang cocok dengan gejala
+        }
+    
+        // Mengambil penyakit dengan jumlah gejala yang paling banyak cocok
+        $maxCount = max($countsPenyakit);
+        $penyakitTerpilih = array_keys($countsPenyakit, $maxCount);
+    
+        // Jika ada lebih dari satu penyakit yang cocok, prioritaskan penyakit dengan gejala terbanyak yang sesuai
+        if (count($penyakitTerpilih) > 1) {
+            // Ambil data kaidah untuk penyakit yang terpilih
+            $kaidahPenyakit = Aturan::whereIn('id_penyakit', $penyakitTerpilih)->get();
+    
+            $penyakitYangPalingSesuai = null;
+            $maxMatchRatio = 0;
+    
+            foreach ($penyakitTerpilih as $penyakit) {
+                // Hitung berapa banyak gejala dari penyakit ini yang sesuai dengan gejala yang dipilih
+                $gejalaPenyakit = $kaidahPenyakit->where('id_penyakit', $penyakit)->pluck('id_gejala')->toArray();
+                $gejalaYangSesuai = array_intersect($gejalaPenyakit, $selectGejala);
+                $matchCount = count($gejalaYangSesuai);
+                $totalGejalaPenyakit = count($gejalaPenyakit);
+    
+                // Rasio kecocokan (gejala yang sesuai dibagi total gejala penyakit)
+                $matchRatio = $matchCount / $totalGejalaPenyakit;
+    
+                // Pilih penyakit dengan rasio kecocokan tertinggi
+                if ($matchRatio > $maxMatchRatio) {
+                    $maxMatchRatio = $matchRatio;
+                    $penyakitYangPalingSesuai = $penyakit;
+                }
+            }
+    
+            return $penyakitYangPalingSesuai;
+        }
+    
+        // Jika hanya ada satu penyakit yang cocok, kembalikan itu
+        return $penyakitTerpilih[0];
     }
+     
 
 }

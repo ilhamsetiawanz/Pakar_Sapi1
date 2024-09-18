@@ -9,7 +9,9 @@
             @include('components.grafik')
         </div>
         <div>
-            @include('components.table.penyakit')
+            @if (Auth::user()->role == 'admin')
+                @include('components.table.penyakit')            
+            @endif
         </div>
     </div>
 @endsection

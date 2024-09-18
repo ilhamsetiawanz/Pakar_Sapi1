@@ -8,7 +8,7 @@
 <div>
     <div class="w-full mt-12">
         <div class="bg-white overflow-auto">
-            <!-- Header dengan Search Bar dan Tombol Tambah Data -->
+            <!--  Tambah Data -->
             <form action="{{ route('Simpan-Gejala') }}" method="POST" enctype="multipart/form-data" class="p-10 bg-white rounded-lg shadow-xl">
                 @csrf
                 <div class="mb-4">
