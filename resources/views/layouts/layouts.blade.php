@@ -28,7 +28,7 @@
 
     <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
         <div class="p-6">
-            <a href="{{ route('Home') }}" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+            <a href="{{ route('Home') }}" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Sistem</a>
         </div>
         <nav class="text-white text-base font-semibold pt-3">
             @if (Auth::user()->role == 'admin')
