@@ -58,6 +58,11 @@ class DiagnosisController extends Controller
     // Algoritma Forward Chaining
     private function forwardChaining($selectGejala)
     {
+        // Memeriksa apakah hanya satu gejala yang dipilih
+        if (count($selectGejala) === 1) {
+            return null; // Tidak menampilkan hasil jika hanya satu gejala
+        }
+    
         // Mendapatkan data aturan berdasarkan gejala yang dipilih
         $dataRules = Aturan::whereIn('id_gejala', $selectGejala)->get();
     
@@ -112,6 +117,4 @@ class DiagnosisController extends Controller
         // Jika hanya ada satu penyakit yang cocok, kembalikan itu
         return $penyakitTerpilih[0];
     }
-     
-
 }
