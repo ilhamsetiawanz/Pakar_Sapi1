@@ -45,7 +45,7 @@
                         </div>
 
                         <div class="mt-4">
-                            <label class="block font-medium text-sm text-gray-700" for="password">Password</label>
+                            <label class="block font-medium text-sm text-grey-700" for="password">Password</label>
                             <div class="relative">
                                 <input id="password" type="password" name="password" placeholder="Password" required autocomplete="current-password" class="w-full rounded-md py-2.5 px-4 border text-sm outline-[#f84525]">
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">

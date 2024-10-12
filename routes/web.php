@@ -45,4 +45,7 @@ Route::middleware('auth')->group(function(){
     // Diagnosis
     Route::get('/diagnosis', [DiagnosisController::class, 'index',])->name('Diagnosis');
     Route::post('/Process-Diagnosis', [DiagnosisController::class, 'processDiagnosis'])->name('Process-Diagnosis');
+
+    // Log Out
+    Route::post('logout', [UserController::class, 'logout'])->name('logout');
 });

@@ -28,27 +28,42 @@ class UserController extends Controller
         ])->withInput();
     }
     public function register(Request $request)
-{
-    // Validasi input
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
-        'password' => 'required|string|min:6|confirmed',
-    ]);
+    {
+        // Validasi input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
 
-    // Membuat user baru
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password), // Hash password
-        'role' => 'user', // Set default role sebagai 'user'
-    ]);
+        // Membuat user baru
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password), // Hash password
+            'role' => 'user', // Set default role sebagai 'user'
+        ]);
 
-    // Login otomatis setelah register
-    Auth::login($user);
+        // Login otomatis setelah register
+        Auth::login($user);
 
-    // Redirect ke halaman dashboard
-    return redirect()->intended('/dashboard');
-}
+        // Redirect ke halaman dashboard
+        return redirect()->intended('/dashboard');
+    }
+
+    public function logout(Request $request)
+    {
+        // Logout pengguna
+        Auth::logout();
+
+        // Invalidate the session
+        $request->session()->invalidate();
+
+        // Regenerate CSRF token
+        $request->session()->regenerateToken();
+
+        // Redirect ke halaman login atau homepage setelah logout
+        return redirect('/');
+    }
     
 }

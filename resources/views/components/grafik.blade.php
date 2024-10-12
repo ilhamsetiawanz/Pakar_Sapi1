@@ -22,7 +22,7 @@
             <p class="text-xl pb-3 flex items-center">
                 <i class="fas fa-chart-bar mr-3"></i> Grafik Laporan Bulanan ({{ $tahun }})
             </p>
-            <div class="p-6 bg-white">
+            <div class="p-6 bg-white" style="height: 400px;">
                 <canvas id="grafikChartBulanan" class="w-full"></canvas>
             </div>
         </div>
@@ -32,7 +32,7 @@
             <p class="text-xl pb-3 flex items-center">
                 <i class="fas fa-chart-line mr-3"></i> Grafik Laporan Tahunan
             </p>
-            <div class="p-6 bg-white">
+            <div class="p-6 bg-white" style="height: 400px;">
                 <canvas id="grafikChartTahunan" class="w-full"></canvas>
             </div>
         </div>
@@ -42,7 +42,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 
 <script>
+    // Fungsi untuk menentukan nilai maksimum y-axis
+    function getMaxValue(data) {
+        if (!data || data.length === 0) {
+            return 1;
+        }
+        const max = Math.max(...data);
+        return max < 1 ? 1 : Math.ceil(max);
+    }
+
     // Grafik Laporan Bulanan
+    var bulananData = @json($valuesBulanan);
+    var maxBulanan = getMaxValue(bulananData);
+    if (bulananData.length === 0) {
+        bulananData = [0];
+    }
     var ctxBulanan = document.getElementById('grafikChartBulanan').getContext('2d');
     var myChartBulanan = new Chart(ctxBulanan, {
         type: 'bar',
@@ -50,7 +64,7 @@
             labels: @json($labelsBulanan),
             datasets: [{
                 label: 'Jumlah Laporan Bulanan',
-                data: @json($valuesBulanan),
+                data: bulananData,
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
@@ -64,13 +78,21 @@
                     ticks: {
                         callback: function(value) {
                             const bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-                            return bulan[value - 1]; // Menampilkan nama bulan
+                            return bulan[value - 1] || value; // Menampilkan nama bulan atau nilai asli jika indeks tidak valid
                         }
                     }
                 }],
                 yAxes: [{
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        stepSize: 1,
+                        max: maxBulanan,
+                        callback: function(value) {
+                            if (Number.isInteger(value)) {
+                                return value;
+                            }
+                            return null; // Tidak menampilkan angka non-integer
+                        }
                     }
                 }]
             }
@@ -78,6 +100,11 @@
     });
 
     // Grafik Laporan Tahunan
+    var tahunanData = @json($valuesTahunan);
+    var maxTahunan = getMaxValue(tahunanData);
+    if (tahunanData.length === 0) {
+        tahunanData = [0];
+    }
     var ctxTahunan = document.getElementById('grafikChartTahunan').getContext('2d');
     var myChartTahunan = new Chart(ctxTahunan, {
         type: 'line',
@@ -85,10 +112,11 @@
             labels: @json($labelsTahunan),
             datasets: [{
                 label: 'Jumlah Laporan Tahunan',
-                data: @json($valuesTahunan),
+                data: tahunanData,
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
+                borderWidth: 1,
+                fill: false
             }]
         },
         options: {
@@ -97,7 +125,15 @@
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        stepSize: 1,
+                        max: maxTahunan,
+                        callback: function(value) {
+                            if (Number.isInteger(value)) {
+                                return value;
+                            }
+                            return null; // Tidak menampilkan angka non-integer
+                        }
                     }
                 }]
             }

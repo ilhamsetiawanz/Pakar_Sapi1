@@ -2,7 +2,7 @@
 
 @section('title', 'Sistem Pakar')
 
-@section('pageName', 'Tambah Data Gejala')
+@section('pageName', 'Edit Data Gejala')
 
 @section('content')
 <div>

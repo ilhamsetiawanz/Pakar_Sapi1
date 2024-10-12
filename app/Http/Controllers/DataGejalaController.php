@@ -55,14 +55,6 @@ class DataGejalaController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(DataGejala $dataGejala)
-    {
-        // 
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(DataGejala $dataGejala)
