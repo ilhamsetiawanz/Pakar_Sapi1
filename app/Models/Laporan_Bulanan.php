@@ -19,6 +19,7 @@ class Laporan_Bulanan extends Model
         'nama_peternak',
         'kdPenyakit',
         'Tanggal_Diagnosa',
+        'gejala'
     ];
 
     public function Penyakit()

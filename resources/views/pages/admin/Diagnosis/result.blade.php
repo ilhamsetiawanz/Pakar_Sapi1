@@ -8,8 +8,18 @@
 <div>
     <div class="w-full mt-12">
         <div class="bg-white overflow-auto p-10 rounded-lg shadow-xl">
+            <h2 class="text-xl font-bold text-gray-700">Hasil Diagnosis</h2>
+            
+            <div class="mt-6">
+                <h3 class="text-lg font-semibold text-gray-700">Gejala yang Dipilih</h3>
+                <ul class="list-disc list-inside text-gray-600">
+                    @foreach ($gejalaDetails as $gejala)
+                        <li>{{ $gejala->NamaGejala }}</li>
+                    @endforeach
+                </ul>
+            </div>
+
             @if ($penyakit)
-                <h2 class="text-xl font-bold text-gray-700">Hasil Diagnosis</h2>
                 <div class="mt-6">
                     <p class="text-gray-600"><strong>Penyakit Terdiagnosis:</strong> {{ $penyakit->Penyakit }}</p>
                     <p class="text-gray-600"><strong>Deskripsi Penyakit:</strong> {{ $penyakit->deskripsi }}</p>
@@ -27,10 +37,10 @@
                         <p class="text-gray-600">Belum Ada Solusi untuk penyakit ini.</p>
                     </div>
                 @endif
-                <p><i>Hasil Ini Hanya Diagnosa Sementara Diperlukannya Diagnosa Lebih Lanjut Agar Mendapatkan Hasil Yang Sesuai</i></p>
+                <p class="mt-4 italic text-gray-600">Hasil Ini Hanya Diagnosa Sementara. Diperlukan Diagnosa Lebih Lanjut Agar Mendapatkan Hasil Yang Sesuai</p>
             @else
-                <h2 class="text-xl font-bold text-gray-700">Tidak Ditemukan Penyakit</h2>
-                <p class="mt-6 text-gray-600">Tidak ada penyakit yang dapat diidentifikasi berdasarkan gejala yang dipilih. Silakan coba lagi dengan memilih gejala lain.</p>
+                <h2 class="text-xl font-bold text-gray-700 mt-6">Tidak Ditemukan Penyakit</h2>
+                <p class="mt-2 text-gray-600">Tidak ada penyakit yang dapat diidentifikasi berdasarkan gejala yang dipilih. Silakan coba lagi dengan memilih gejala lain.</p>
             @endif
 
             <div class="mt-6">
