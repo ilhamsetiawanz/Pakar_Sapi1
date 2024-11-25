@@ -6,9 +6,36 @@
 @section('content')
     <div>
         <div class="w-full mt-12">
-            <p class="text-xl pb-3 flex items-center">
-                <i class="fas fa-list mr-3"></i> Laporan Bulanan
-            </p>
+            <div class="flex justify-between items-center pb-4">
+                <p class="text-xl flex items-center">
+                    <i class="fas fa-list mr-3"></i> Laporan Bulanan
+                </p>
+                <div class="w-1/3">
+                    <form action="{{ route('Laporan-Bulanan') }}" method="GET" class="flex gap-2">
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ request('search') }}"
+                            placeholder="Cari nama peternak..."
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                        >
+                        <button
+                            type="submit"
+                            class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
+                        >
+                            Cari
+                        </button>
+                        @if(request('search'))
+                            
+                            <a    href="{{ route('Laporan-Bulanan') }}"
+                                class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none"
+                            >
+                                Reset
+                            </a>
+                        @endif
+                    </form>
+                </div>
+            </div>
             <div class="bg-white overflow-auto">
                 <table class="text-left w-full border-collapse">
                     <thead>
@@ -49,11 +76,11 @@
                                 @endforeach
                             </td>
                         </tr>
-                    @empty
+                        @empty
                         <tr>
                             <td colspan="5" class="py-4 px-6 border-b border-grey-light text-center">Tidak ada data</td>
                         </tr>
-                    @endforelse                    
+                        @endforelse                    
                     </tbody>
                 </table>
                 <div class="m-10 px-3">

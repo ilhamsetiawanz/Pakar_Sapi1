@@ -18,22 +18,12 @@
     <!-- Grafik dengan Flexbox -->
     <div class="flex flex-col xl:flex-row gap-4">
         <!-- Grafik Laporan Bulanan -->
-        <div class="w-full xl:w-1/2">
+        <div class="w-full">
             <p class="text-xl pb-3 flex items-center">
                 <i class="fas fa-chart-bar mr-3"></i> Grafik Laporan Bulanan ({{ $tahun }})
             </p>
             <div class="p-6 bg-white" style="height: 400px;">
                 <canvas id="grafikChartBulanan" class="w-full"></canvas>
-            </div>
-        </div>
-
-        <!-- Grafik Laporan Tahunan -->
-        <div class="w-full xl:w-1/2">
-            <p class="text-xl pb-3 flex items-center">
-                <i class="fas fa-chart-line mr-3"></i> Grafik Laporan Tahunan
-            </p>
-            <div class="p-6 bg-white" style="height: 400px;">
-                <canvas id="grafikChartTahunan" class="w-full"></canvas>
             </div>
         </div>
     </div>
@@ -87,47 +77,6 @@
                         beginAtZero: true,
                         stepSize: 1,
                         max: maxBulanan,
-                        callback: function(value) {
-                            if (Number.isInteger(value)) {
-                                return value;
-                            }
-                            return null; // Tidak menampilkan angka non-integer
-                        }
-                    }
-                }]
-            }
-        }
-    });
-
-    // Grafik Laporan Tahunan
-    var tahunanData = @json($valuesTahunan);
-    var maxTahunan = getMaxValue(tahunanData);
-    if (tahunanData.length === 0) {
-        tahunanData = [0];
-    }
-    var ctxTahunan = document.getElementById('grafikChartTahunan').getContext('2d');
-    var myChartTahunan = new Chart(ctxTahunan, {
-        type: 'line',
-        data: {
-            labels: @json($labelsTahunan),
-            datasets: [{
-                label: 'Jumlah Laporan Tahunan',
-                data: tahunanData,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1,
-                fill: false
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        stepSize: 1,
-                        max: maxTahunan,
                         callback: function(value) {
                             if (Number.isInteger(value)) {
                                 return value;
