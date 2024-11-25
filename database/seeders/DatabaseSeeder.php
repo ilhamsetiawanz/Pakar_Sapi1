@@ -20,8 +20,9 @@ class DatabaseSeeder extends Seeder
             'name' => 'Sapi',
             'email' => 'sapi@gmail.com',
             'password' => Hash::make('password123'), // Jangan lupa ganti password sesuai keperluan
-            'role' => 'user',
+            'role' => 'admin',
         ]);
+        
         // Aturan::insert([
         //     //id 1
         //     ['id_penyakit' => 1, 'id_gejala' => 1],
