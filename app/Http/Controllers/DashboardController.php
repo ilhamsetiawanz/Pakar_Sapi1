@@ -33,12 +33,23 @@ class DashboardController extends Controller
             ->orderBy('tahun')
             ->get();
 
+        // Dapatkan jumlah diagnosis tiap penyakit per tahun
+        $laporanPenyakitTahunan = Laporan_Bulanan::selectRaw('penyakits.Penyakit as nama_penyakit, COUNT(*) as jumlah')
+            ->join('penyakits', 'laporan__bulanans.kdPenyakit', '=', 'penyakits.id')
+            ->whereYear('Tanggal_Diagnosa', $tahun)
+            ->groupBy('penyakits.Penyakit')
+            ->orderBy('penyakits.Penyakit')
+            ->get();
+
         // Persiapkan data untuk grafik
         $labelsBulanan = $laporanBulanan->pluck('bulan')->all();
         $valuesBulanan = $laporanBulanan->pluck('jumlah')->all();
-        
+
         $labelsTahunan = $laporanTahunan->pluck('tahun')->all();
         $valuesTahunan = $laporanTahunan->pluck('jumlah')->all();
+
+        $labelsPenyakitTahunan = $laporanPenyakitTahunan->pluck('nama_penyakit')->all();
+        $valuesPenyakitTahunan = $laporanPenyakitTahunan->pluck('jumlah')->all();
 
         $penyakit = Penyakit::all();
 
@@ -49,6 +60,8 @@ class DashboardController extends Controller
             'valuesBulanan' => $valuesBulanan,
             'labelsTahunan' => $labelsTahunan,
             'valuesTahunan' => $valuesTahunan,
+            'labelsPenyakitTahunan' => $labelsPenyakitTahunan,
+            'valuesPenyakitTahunan' => $valuesPenyakitTahunan,
             'penyakit' => $penyakit
         ]);
     }

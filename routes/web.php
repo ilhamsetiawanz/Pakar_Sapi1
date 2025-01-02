@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function(){
     });
     // Laporan Bulanan
     Route::get('/Laporan-Bulanan', [LaporanBulananController::class, 'index'])->name('Laporan-Bulanan');
+    Route::get('/Laporan-Bulanan/{id}', [LaporanBulananController::class, 'show'])->name('Laporan-Bulanan.detail');
 
     // Diagnosis
     Route::get('/diagnosis', [DiagnosisController::class, 'index',])->name('Diagnosis');

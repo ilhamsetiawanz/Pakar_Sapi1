@@ -4,7 +4,7 @@
         <p class="text-xl pb-3 flex items-center">
             <i class="fas fa-chart-bar mr-3"></i>Laporan
         </p>
-        <form action="{{ route('grafik.index') }}" method="GET" class="flex items-center">
+        <form action="" method="GET" class="flex items-center">
             <label for="tahun" class="block mb-0 mr-2">Pilih Tahun:</label>
             <select name="tahun" id="tahun" class="border rounded p-2">
                 @foreach($tahunList as $year)
@@ -24,6 +24,16 @@
             </p>
             <div class="p-6 bg-white" style="height: 400px;">
                 <canvas id="grafikChartBulanan" class="w-full"></canvas>
+            </div>
+        </div>
+
+        <!-- Grafik Laporan Penyakit Tahunan -->
+        <div class="w-full">
+            <p class="text-xl pb-3 flex items-center">
+                <i class="fas fa-chart-bar mr-3"></i> Grafik Laporan Penyakit Tahunan ({{ $tahun }})
+            </p>
+            <div class="p-6 bg-white" style="height: 400px;">
+                <canvas id="grafikChartPenyakitTahunan" class="w-full"></canvas>
             </div>
         </div>
     </div>
@@ -83,6 +93,40 @@
                             }
                             return null; // Tidak menampilkan angka non-integer
                         }
+                    }
+                }]
+            }
+        }
+    });
+
+    // Grafik Laporan Penyakit Tahunan
+    var penyakitData = @json($valuesPenyakitTahunan);
+    var ctxPenyakit = document.getElementById('grafikChartPenyakitTahunan').getContext('2d');
+    var myChartPenyakit = new Chart(ctxPenyakit, {
+        type: 'bar',
+        data: {
+            labels: @json($labelsPenyakitTahunan),
+            datasets: [{
+                label: 'Jumlah Diagnosis per Penyakit',
+                data: penyakitData,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        autoSkip: false
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 1
                     }
                 }]
             }

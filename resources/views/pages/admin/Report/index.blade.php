@@ -26,7 +26,6 @@
                             Cari
                         </button>
                         @if(request('search'))
-                            
                             <a    href="{{ route('Laporan-Bulanan') }}"
                                 class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none"
                             >
@@ -45,6 +44,7 @@
                             <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Tanggal Diagnosa</th>
                             <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Gejala yang Dipilih</th>
                             <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Hasil Diagnosa</th>
+                            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,10 +75,16 @@
                                     @endif
                                 @endforeach
                             </td>
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                <a href="{{ route('Laporan-Bulanan.detail', $laporanBulanan->id) }}" 
+                                   class="text-blue-500 hover:text-blue-700 transition-colors duration-200">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="py-4 px-6 border-b border-grey-light text-center">Tidak ada data</td>
+                            <td colspan="6" class="py-4 px-6 border-b border-grey-light text-center">Tidak ada data</td>
                         </tr>
                         @endforelse                    
                     </tbody>
